@@ -20,13 +20,13 @@ from fastapi import APIRouter
 
 from paddlespeech.cli.log import logger
 from paddlespeech.server.engine.engine_pool import get_engine_pool
+from paddlespeech.server.engine.text.python.text_engine import PaddleTextConnectionHandler
 from paddlespeech.server.restful.request import ASRRequest
 from paddlespeech.server.restful.response import ASRResponse
 from paddlespeech.server.restful.response import ErrorResponse
 from paddlespeech.server.utils.errors import ErrorCode
 from paddlespeech.server.utils.errors import failed_response
 from paddlespeech.server.utils.exception import ServerBaseException
-from paddlespeech.server.engine.text.python.text_engine import PaddleTextConnectionHandler
 
 router = APIRouter()
 
