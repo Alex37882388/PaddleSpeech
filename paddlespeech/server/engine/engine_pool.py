@@ -30,8 +30,9 @@ def init_engine_pool(config) -> bool:
     global ENGINE_POOL
 
     for engine_and_type in config.engine_list:
-        engine = engine_and_type.split("_")[0]
-        engine_type = engine_and_type.split("_")[1]
+        engine, engine_type = engine_and_type.split("_")
+        assert (engine != 'asr') or ('text_python' in config.engine_list), \
+            "When engine is 'asr', must be enabled 'text_python' to support punctuation recovery"
         ENGINE_POOL[engine] = EngineFactory.get_engine(
             engine_name=engine, engine_type=engine_type)
 

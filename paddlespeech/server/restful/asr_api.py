@@ -26,6 +26,7 @@ from paddlespeech.server.restful.response import ErrorResponse
 from paddlespeech.server.utils.errors import ErrorCode
 from paddlespeech.server.utils.errors import failed_response
 from paddlespeech.server.utils.exception import ServerBaseException
+from paddlespeech.server.engine.text.python.text_engine import PaddleTextConnectionHandler
 
 router = APIRouter()
 
@@ -82,6 +83,11 @@ def asr(request_body: ASRRequest):
 
         connection_handler.run(audio_data)
         asr_results = connection_handler.postprocess()
+
+        if request_body.punc:
+            text_engine = engine_pool['text']
+            connection_handler = PaddleTextConnectionHandler(text_engine)
+            asr_results = connection_handler.run(asr_results)
 
         response = {
             "success": True,
